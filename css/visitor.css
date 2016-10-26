@@ -1,0 +1,29 @@
+body {
+    height: 100%;
+    background-image: url(../img/bg.jpg);
+    background-position: center;
+}
+.wide-card.mdl-card {
+    width: 512px;
+    background: white;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+.vidwide {
+    width: 670px;
+}
+.wide-input {
+    width: 480px;
+}
+video {
+    width: 492px;
+    height: 369px;
+    background-color: rgba(0,0,0,255);
+    background-image: url(../img/oeil.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0px solid #E91E63;
+    z-index: -1;
+}
