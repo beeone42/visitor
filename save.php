@@ -1,6 +1,40 @@
 <?php
 
-echo "OK";
+include("config.php");
+
+function getSslPage($url) {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+  curl_setopt($ch, CURLOPT_HEADER, false);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_REFERER, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  $result = curl_exec($ch);
+  curl_close($ch);
+  return $result;
+}
+
+
+if (isset($config) && ($config['slack_token'] != ""))
+  {
+    $url = "https://slack.com/api/chat.postMessage?token=".
+      $config['slack_token'].
+      "&channel=".$config['slack_channel'].
+      "&as_user=false";
+
+    $txt = $_REQUEST['visitor_name'].' is here and waiting for you';
+    $tmp["fallback"] = preg_replace("/[^A-Za-z0-9.]/", '.', trim($txt));
+    $tmp["text"] = $txt;
+    $tmp["mrkdwn_in"] = Array("text");
+    //$tmp["image_url"] = $_REQUEST['sig'];
+    $url .= "&attachments=".urlencode(json_encode(Array($tmp)));
+    echo $url;
+    echo "\n";
+    $res = getSslPage($url);
+    echo $res;
+    exit ;
+  }
 
 $to = $_REQUEST['visited_email']; 
 $subject = $_REQUEST['visitor_name'].' is here and waiting for you'; 
