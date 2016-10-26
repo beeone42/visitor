@@ -12,7 +12,8 @@
      <div class="mdl-layout mdl-js-layout">
        <main class="mdl-layout__content">
          <div class="page-content" style="text-align: center; padding-top:50px;">
-	   <div class="wide-card mdl-card mdl-shadow--2dp">
+	   <!-- name / email form -->
+	   <div class="wide-card mdl-card mdl-shadow--2dp" id="infos-form">
 	     <center><img src='img/stationf.svg' width='200px' /></center>
 	     <br />
 	     <form action="photo.html">
@@ -42,11 +43,53 @@
 		 </td>
 	       </tr>
 	     </table>
-	     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Next</button>
+	     <button id="btn-infos" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Next</button>
 	     </form>
 	   </div>
+	   <!-- photo -->
+	   <div class="wide-card mdl-card mdl-shadow--2dp" id="photo-form" style="display: none;">
+	     <center><img src='img/stationf.svg' width='200px' /></center>
+	     <br />
+	     <video autoplay></video>
+	     <button id="btn-photo" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+	       SMILE AND CLICK HERE
+	     </button>
+	   </div>
+	   <!-- sign -->
+	   <div class="wide-card mdl-card mdl-shadow--2dp" id="sign-form" style="display: none;">
+	     <center><img src='img/stationf.svg' width='200px' /></center>
+	     <br />
+	     <h3>NDA</h3>
+
+	     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+	     <br />
+	     <canvas id="sign-canvas" width="500px" height="300px"></canvas>
+	     <button id="btn-sign" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" disabled>
+	       Sign above then click here
+	     </button>
+	   </div>
+
+
+	   <!-- final -->
+	   <div class="wide-card mdl-card mdl-shadow--2dp" id="final-form" style="display: none;">
+	     <center><img src='img/stationf.svg' width='200px' /></center>
+	     <br />
+	     <h3>Thank you</h3>
+
+	     Please wait here for your host.
+
+	   </div>
+
+
 	 </div>
        </main>
      </div>
+     <canvas id="image" style="display:block;" width="320px" height="240px"></canvas>
+     <img id="sig" src='img/oeil.png' style="display:block;" width="320px" height="240px"></canvas>
+     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+     <script src="https://szimek.github.io/signature_pad/js/signature_pad.js"></script>
+     <script type="text/javascript" src="js/photo.js"></script>
+     <script type="text/javascript" src="js/sign.js"></script>
    </body>
 </html>

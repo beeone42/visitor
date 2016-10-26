@@ -27,3 +27,6 @@ video {
     border: 0px solid #E91E63;
     z-index: -1;
 }
+#sign-canvas {
+    border: 1px solid black;
+}

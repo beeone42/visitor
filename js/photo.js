@@ -1,16 +1,5 @@
-var onFailSoHard = function(e) {
-    console.log('Reeeejected!', e);
-};
-var onError = function(e) {
-    console.log('Errrrror!', e);
-};
-
-window.URL = window.URL || window.webkitURL;
-navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
 var video = document.querySelector('video');
-var canvas = document.querySelector('canvas');
+var canvas = document.querySelector('#image');
 var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 
@@ -22,3 +11,28 @@ if (navigator.getUserMedia) {
 } else {
     video.src = 'oeil.png'; // fallback.
 }
+
+$("#btn-infos").click(function () {
+    $("#infos-form").hide();
+    $("#photo-form").show();
+});
+
+$("#btn-photo").click(function () {
+    shoot();
+    $("#photo-form").hide();
+    $("#sign-form").show();
+});
+
+function shoot() {
+    if (localMediaStream)
+    {
+	var src_w, src_h;
+	
+	src_h = video.videoHeight;
+	src_w = (src_h * 320) / 240;
+	ctx.drawImage(video, 0, 0, src_w, src_h, 0, 0, 320, 240);
+	$("#photo").attr('src', canvas.toDataURL('image/jpeg'));
+    }
+    return (false);
+}
+
