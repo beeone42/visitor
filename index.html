@@ -1,0 +1,68 @@
+<html>
+   <head>
+      <title>Visitor</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+      <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <style>
+	body {
+	height: 100%;
+	background-image: url(http://www.redman.fr/wp-content/uploads/2013/11/Vue-espace-Forum-et-auditorium_Wilmotte-et-Associes-SA2.jpg);
+	background-position: center;
+	}
+	.wide-card.mdl-card {
+        width: 512px;
+	background: white;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	}
+	.wide-input {
+	width: 480px;
+	}
+      </style>
+   </head>
+   <body>
+     <div class="mdl-layout mdl-js-layout">
+       <main class="mdl-layout__content">
+         <div class="page-content" style="text-align: center; padding-top:50px;">
+	   <div class="wide-card mdl-card mdl-shadow--2dp">
+	     <center><img src='img/stationf.svg' width='200px' /></center>
+	     <br />
+	     <form action="photo.html">
+	     <table width='100%'>
+	       <tr>
+		 <td> 
+		   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label wide-input">
+		     <input class="mdl-textfield__input" type="text" id="visitor_name">
+		     <label class="mdl-textfield__label" for="text4">Your full name</label>
+		   </div>
+		 </td>
+	       </tr>
+	       <tr>
+		 <td>
+		   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label wide-input">
+		     <input class="mdl-textfield__input" type="text" id="visitor_email">
+		     <label class="mdl-textfield__label" for="text4">Your email address</label>
+		   </div>
+		 </td>
+	       </tr>
+	       <tr>
+		 <td>
+		   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label wide-input">
+		     <input class="mdl-textfield__input" type="text" id="visited_email">
+		     <label class="mdl-textfield__label" for="text4">Who are you meeting ?</label>
+		   </div>
+		 </td>
+	       </tr>
+	     </table>
+	     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Next</button>
+	     </form>
+	   </div>
+	 </div>
+       </main>
+     </div>
+   </body>
+</html>
