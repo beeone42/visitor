@@ -33,7 +33,6 @@ if (isset($config) && ($config['slack_token'] != ""))
     echo "\n";
     $res = getSslPage($url);
     echo $res;
-    exit ;
   }
 
 $to = $_REQUEST['visited_email']; 
