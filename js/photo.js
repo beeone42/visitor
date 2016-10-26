@@ -29,8 +29,10 @@ function shoot() {
 	var src_w, src_h;
 	
 	src_h = video.videoHeight;
-	src_w = (src_h * 320) / 240;
-	ctx.drawImage(video, 0, 0, src_w, src_h, 0, 0, 320, 240);
+	//src_w = (src_h * 320) / 240;
+	src_w = (src_h * 240) / 320;
+	//ctx.drawImage(video, 0, 0, src_w, src_h, 0, 0, 320, 240);
+	ctx.drawImage(video, 0, 0, src_w, src_h, 0, 0, 240, 320);
 	$("#photo").attr('src', canvas.toDataURL('image/jpeg'));
     }
     return (false);
