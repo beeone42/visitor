@@ -21,5 +21,8 @@ function sign(cv) {
 	$("#sign-form").hide();
 	$("#final-form").show();
 	saveViaAJAX('save.php');
+	setTimeout(function() {
+	    location.reload();
+	}, 5000);
     }
 }
