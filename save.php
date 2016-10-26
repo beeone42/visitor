@@ -1,20 +1,7 @@
 <?php
 
 include("config.php");
-
-function getSslPage($url) {
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-  curl_setopt($ch, CURLOPT_HEADER, false);
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-  curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_REFERER, $url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-  $result = curl_exec($ch);
-  curl_close($ch);
-  return $result;
-}
-
+include("class.phpmailer.php");
 
 if (isset($config) && ($config['slack_token'] != ""))
   {
@@ -31,66 +18,35 @@ if (isset($config) && ($config['slack_token'] != ""))
     $url .= "&attachments=".urlencode(json_encode(Array($tmp)));
     echo $url;
     echo "\n";
-    $res = getSslPage($url);
+    $res = file_get_contents($url);
     echo $res;
   }
 
-$to = $_REQUEST['visited_email']; 
-$subject = $_REQUEST['visitor_name'].' is here and waiting for you'; 
-$random_hash = md5(date('r', time())); 
-$headers = "From: ".$_REQUEST['visitor_email']."\r\nReply-To: ".$_REQUEST['visitor_email']; 
-$headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\""; 
 
-$tmp = split(',', $_REQUEST['photo']);
-$photo = chunk_split($tmp[1]);
-$tmp = split(',', $_REQUEST['sig']);
-$sig = chunk_split($tmp[1]); 
+$mail = new PHPMailer;
 
-ob_start(); //Turn on output buffering 
-?> 
---PHP-mixed-<?php echo $random_hash; ?>  
-Content-Type: multipart/alternative; boundary="PHP-alt-<?php echo $random_hash; ?>" 
 
---PHP-alt-<?php echo $random_hash; ?>  
-Content-Type: text/plain; charset="iso-8859-1" 
-Content-Transfer-Encoding: 7bit
+$mail->setFrom($_REQUEST['visitor_email'], $_REQUEST['visitor_name']);
+$mail->addAddress($_REQUEST['visited_email']);
+$mail->Subject = $_REQUEST['visitor_name'].' is here and waiting for you'; 
+$mail->isHTML(true);
+$mail->Body    = '<b>'.$_REQUEST['visitor_name'].'</b> is here !<br /><img src="cid:photocid">';
+$mail->AltBody = $_REQUEST['visitor_name'].' is here !';
+$mail->addStringEmbeddedImage(b64_to_bin($_REQUEST['photo']), "photocid", 'photo.jpg', 'base64', 'image/jpeg', 'inline');
+$mail->addStringEmbeddedImage(b64_to_bin($_REQUEST['sig']),   "sigcid",   'sig.png',   'base64', 'image/png',  'inline');
 
-<?php echo $_REQUEST['visitor_name'] ?> is arrived and is waiting for you.
+if(!$mail->send()) {
+  echo 'Message could not be sent.';
+  echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+  echo 'Message has been sent';
+}
 
---PHP-alt-<?php echo $random_hash; ?>  
-Content-Type: text/html; charset="iso-8859-1" 
-Content-Transfer-Encoding: 7bit
-
-<h3><?php echo $_REQUEST['visitor_name'] ?></h3> 
-<p>is arrived and is waiting for you.</p> 
-<img src="cid:photocid">
-<img src="cid:sigcid">
-
---PHP-alt-<?php echo $random_hash; ?>-- 
---PHP-mixed-<?php echo $random_hash; ?>  
-Content-Type: image/jpeg; name="photo.jpg"  
-Content-Transfer-Encoding: base64  
-Content-ID: <photocid>
-Content-Disposition: inline, filename="photo.jpg"
-
-<?php echo $photo; ?> 
-
---PHP-mixed-<?php echo $random_hash; ?>  
-Content-Type: image/png; name="sig.png"  
-Content-Transfer-Encoding: base64  
-Content-ID: <sigcid>
-Content-Disposition: inline, filename="sig.png"
-
-<?php echo $sig; ?> 
-
---PHP-mixed-<?php echo $random_hash; ?>-- 
-
-<?php 
-//copy current buffer contents into $message variable and delete current output buffer 
-$message = ob_get_clean(); 
-//send the email 
-$mail_sent = mail( $to, $subject, $message, $headers ); 
-//if the message is sent successfully print "Mail sent". Otherwise print "Mail failed" 
-echo $mail_sent ? "Mail sent" : "Mail failed"; 
+function b64_to_bin($str)
+{
+  $tmp = split(',', $str);
+  $res = base64_decode($tmp[1]);
+  return ($res);
+}
 
 ?>
